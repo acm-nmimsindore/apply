@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ACM Leadership Applications 2026</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%23c8181a%22/><text y=%22.9em%22 font-size=%2270%22 fill=%22white%22 font-family=%22Orbitron%22 x=%2250%%22 text-anchor=%22middle%22 font-weight=%22bold%22>A</text></svg>">
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;600;700&family=Rajdhani:wght@400;500;600;700&family=Orbitron:wght@400;700&family=Cormorant+Garamond:ital,wght@0,500;1,400;1,600&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -86,7 +87,7 @@
         .tech-orbitron { font-family: 'Orbitron', sans-serif; letter-spacing: 2px; }
 
         .form-input { 
-            @apply w-full p-4 bg-slate-50 border-b-2 border-slate-200 focus:border-red-600 outline-none transition-all text-2xl font-bold text-black placeholder:text-slate-200;
+            @apply w-full p-4 bg-slate-50 border-2 border-slate-200 focus:border-red-600 outline-none transition-all text-2xl font-bold text-black placeholder:text-slate-200 rounded-lg;
             font-family: 'Oswald', sans-serif;
             letter-spacing: 2px;
         }
@@ -136,6 +137,11 @@
             background: linear-gradient(90deg, transparent, var(--red) 20%, var(--red) 80%, transparent);
             margin: 10px auto;
         }
+
+        .logo-slot {
+            width: 60px; height: 60px; display: flex; align-items: center; justify-content: center;
+        }
+        .logo-slot img { max-width: 100%; max-height: 100%; object-fit: contain; }
     </style>
     <script>
         document.addEventListener('alpine:init', () => {
@@ -265,17 +271,27 @@
                     
                     <!-- Landing -->
                     <div x-show="step === 0" class="text-center card-animation">
+                        <!-- Logo Row -->
+                        <div class="flex justify-center items-center gap-6 mb-4">
+                            <div class="logo-slot"><img src="nmims.png" alt="NMIMS"></div>
+                            <div class="logo-slot"><img src="acm.png" alt="ACM"></div>
+                            <div class="logo-slot"><img src="acmw.png" alt="ACM-W"></div>
+                        </div>
+                        <p class="tech-orbitron text-[9px] text-slate-600 font-bold uppercase tracking-[2px] mb-6">
+                            SVKM's NMIMS Indore In Association with Association for Computing Machinery (ACM)
+                        </p>
+
                         <div class="title-oswald text-7xl sm:text-9xl font-black text-black leading-[0.85] italic mb-6">ACM<br><span class="text-red-600">2026</span></div>
                         <div class="red-rule w-32"></div>
-                        <p class="mt-8 text-slate-500 font-semibold tracking-[5px] uppercase text-[10px]">Strategic Leadership Initiative</p>
+                        <p class="mt-8 text-slate-500 font-semibold tracking-[5px] uppercase text-[10px]">Student Chapter Leadership Applications</p>
                         <p class="mt-4 text-slate-600 font-medium italic max-w-sm mx-auto text-lg leading-relaxed">Open for applications from visionaries ready to redefine the NMIMS Indore technical ecosystem.</p>
                     </div>
 
                     <!-- Input Steps -->
                     <div x-show="step === 1" class="card-animation">
-                        <label class="tech-orbitron text-[10px] text-red-600 font-bold tracking-[4px] mb-4 block uppercase">Protocol: Identity</label>
+                        <label class="tech-orbitron text-[10px] text-red-600 font-bold tracking-[4px] mb-4 block uppercase">Designation Entry</label>
                         <h2 class="title-oswald text-4xl sm:text-5xl font-black uppercase mb-10 italic">Your Full Name</h2>
-                        <input type="text" class="form-input" placeholder="DESIGNATION ENTRY" x-model="formData.name" @keydown.enter="handleNext">
+                        <input type="text" class="form-input" placeholder="FULL LEGAL NAME" x-model="formData.name" @keydown.enter="handleNext">
                     </div>
 
                     <div x-show="step === 2" class="card-animation">
