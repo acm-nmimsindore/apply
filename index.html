@@ -162,7 +162,6 @@
         }
         @keyframes alertFade { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* Audit title card style */
         .audit-title-card {
             text-align: center;
             padding: 2.5rem 0;
@@ -199,23 +198,6 @@
     <script>
         document.addEventListener('alpine:init', () => {
             Alpine.data('formApp', () => ({
-                // Steps:
-                // 0  = landing
-                // 1  = PERSONAL DETAILS AUDIT title card  ← NEW
-                // 2  = full name
-                // 3  = SAP ID
-                // 4  = email
-                // 5  = contact number
-                // 6  = ACADEMIC AUDIT title card           ← NEW
-                // 7  = year
-                // 8  = section
-                // 9  = branch
-                // 10 = LEGACY AUDIT title card
-                // 11 = prior member?
-                // 12 = experience grid
-                // 13 = core roles
-                // 14 = wing objective
-                // 15 = review
                 step: 0,
                 totalSteps: 16,
                 submitted: false,
@@ -241,7 +223,6 @@
                 },
                 matrixRows: ['TECHNICAL', 'EVENTS', 'FINANCE', 'PR', 'SOCIAL MEDIA & DESIGN', 'MEDIA PRODUCTION'],
                 matrixCols: ['LEAD', 'MEMBER'],
-                // Title-card steps that auto-advance on "Confirm Protocol" — no validation needed
                 titleCardSteps: [1, 6, 10],
                 init() { 
                     lucide.createIcons(); 
@@ -252,7 +233,6 @@
                     setTimeout(() => { this.showAlert = false; }, 4000);
                 },
                 handleNext() {
-                    // Validation (mapped to new step numbers)
                     if (this.step === 2 && !this.formData.name) return this.triggerError("NAME REQUIRED");
                     if (this.step === 3 && this.formData.sapId.length !== 11) return this.triggerError("SAP ID MUST BE 11 DIGITS");
                     if (this.step === 4 && !this.formData.email.includes('@')) return this.triggerError("VALID EMAIL REQUIRED");
@@ -265,7 +245,6 @@
                     if (this.step === 13 && this.formData.roles.length === 0) return this.triggerError("SELECT AT LEAST ONE ROLE");
                     if (this.step === 14 && this.formData.chapterType.length === 0) return this.triggerError("SELECT AT LEAST ONE WING");
 
-                    // Skip experience grid if not a prior member
                     if (this.step === 11 && this.formData.wasMember === 'No') {
                         this.step += 2;
                     } else if (this.step < this.totalSteps - 1) {
@@ -334,8 +313,9 @@
                 <div class="h-1 w-24 bg-red-600 my-6 mx-auto"></div>
                 <p class="text-slate-500 text-lg font-medium max-w-lg mb-8 italic">Your leadership credentials for the 2026 term have been successfully processed.</p>
                 
+                <!-- WebMaster-only block -->
                 <template x-if="isWebMaster">
-                    <div class="mb-10 p-6 border-2 border-red-600 bg-black text-white text-left max-w-lg w-full relative overflow-hidden shadow-2xl">
+                    <div class="mb-6 p-6 border-2 border-red-600 bg-black text-white text-left max-w-lg w-full relative overflow-hidden shadow-2xl">
                         <div class="absolute -top-4 -right-4 opacity-10"><i data-lucide="code" class="w-24 h-24"></i></div>
                         <h4 class="tech-orbitron text-red-500 text-[10px] tracking-[5px] mb-2 uppercase font-bold">Vetting Phase</h4>
                         <p class="title-oswald text-2xl font-bold mb-3 italic leading-none uppercase">WebSprint Selection</p>
@@ -345,6 +325,17 @@
                         </a>
                     </div>
                 </template>
+
+                <!-- ALL applicants block -->
+                <div class="mb-10 p-6 border-2 border-slate-900 bg-white text-left max-w-lg w-full relative overflow-hidden shadow-xl">
+                    <div class="absolute -top-4 -right-4 opacity-5"><i data-lucide="users" class="w-24 h-24"></i></div>
+                    <h4 class="tech-orbitron text-[10px] tracking-[5px] mb-2 uppercase font-bold text-slate-400">Further Updates</h4>
+                    <p class="title-oswald text-2xl font-bold mb-3 italic leading-none uppercase">Join For Interviews</p>
+                    <p class="text-xs text-slate-500 mb-6 font-medium leading-relaxed italic">Join the official ACM Office Bearers Interviews 2026 group for further information on interviews and next steps.</p>
+                    <a href="https://chat.whatsapp.com/LkK1tlkQR5pIEEaw7o7jmS?mode=gi_t" target="_blank" class="btn-action w-full">
+                        Join Interview Updates Group <i data-lucide="external-link" class="w-4 h-4"></i>
+                    </a>
+                </div>
 
                 <button @click="resetForm()" class="title-oswald text-slate-400 hover:text-black font-bold uppercase flex items-center gap-2 tracking-widest transition-colors">
                     <i data-lucide="home" class="w-5 h-5"></i> Return to Command
@@ -393,7 +384,7 @@
                         <p class="mt-6 text-slate-600 font-medium italic max-w-sm mx-auto text-base leading-relaxed">Initiating search for visionaries to redefine the NMIMS Indore technical ecosystem.</p>
                     </div>
 
-                    <!-- STEP 1: PERSONAL DETAILS AUDIT title card (NEW) -->
+                    <!-- STEP 1: PERSONAL DETAILS AUDIT title card -->
                     <div x-show="step === 1" class="audit-title-card card-animation">
                         <i data-lucide="user" class="audit-icon"></i>
                         <h2>Personal Details Audit</h2>
@@ -430,7 +421,7 @@
                         <input type="text" maxlength="10" class="form-input" placeholder="10-DIGIT MOBILE" x-model="formData.contact" @keydown.enter="handleNext">
                     </div>
 
-                    <!-- STEP 6: ACADEMIC AUDIT title card (NEW) -->
+                    <!-- STEP 6: ACADEMIC AUDIT title card -->
                     <div x-show="step === 6" class="audit-title-card card-animation">
                         <i data-lucide="book-open" class="audit-icon"></i>
                         <h2>Academic Audit</h2>
@@ -495,13 +486,10 @@
                         
                         <div class="overflow-x-auto border-2 border-slate-900 shadow-xl">
                             <div class="min-w-[450px] grid grid-cols-3">
-                                <!-- Headers -->
                                 <div class="bg-black text-white p-3 text-[10px] font-bold uppercase tracking-widest italic">DEPT / ROLE</div>
                                 <template x-for="col in matrixCols">
                                     <div class="bg-red-600 text-white p-3 text-center text-[10px] font-bold uppercase tracking-widest" x-text="col"></div>
                                 </template>
-
-                                <!-- Grid Rows -->
                                 <template x-for="row in matrixRows">
                                     <div class="contents">
                                         <div class="p-4 border-b border-slate-200 bg-slate-50 text-[11px] font-black title-oswald italic uppercase" x-text="row"></div>
