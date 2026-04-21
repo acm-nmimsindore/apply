@@ -70,10 +70,21 @@
         .tech-orbitron { font-family: 'Orbitron', sans-serif; letter-spacing: 2px; }
 
         .form-input { 
-            @apply w-full p-4 bg-slate-50 border-2 border-slate-400 focus:border-red-600 outline-none transition-all text-2xl font-bold text-black placeholder:text-slate-300 rounded-lg;
+            width: 100%;
+            padding: 1rem;
+            background: white;
+            border: 2px solid #0f172a;
+            outline: none;
+            transition: border-color 0.2s;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: black;
+            border-radius: 0.5rem;
             font-family: 'Oswald', sans-serif;
             letter-spacing: 2px;
         }
+        .form-input::placeholder { color: #cbd5e1; }
+        .form-input:focus { border-color: #dc2626; }
 
         .btn-action {
             padding: 14px 32px;
@@ -96,11 +107,52 @@
         .btn-action:active { transform: translateY(0); scale: 0.98; }
 
         .btn-selection {
-            @apply flex-1 py-4 border-2 font-bold uppercase tracking-widest text-sm transition-all duration-200 rounded-lg;
+            flex: 1;
+            padding: 1rem;
+            border: 2px solid;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            font-size: 0.875rem;
+            transition: all 0.2s;
+            border-radius: 0.5rem;
             font-family: 'Oswald', sans-serif;
         }
-        .btn-selection.active { @apply bg-black text-white border-black shadow-lg; }
-        .btn-selection.inactive { @apply bg-white text-slate-400 border-slate-200 hover:border-red-300 hover:text-red-600; }
+        .btn-selection.active { background: black; color: white; border-color: black; box-shadow: 0 4px 14px rgba(0,0,0,0.3); }
+        .btn-selection.inactive { background: white; color: #94a3b8; border-color: #e2e8f0; }
+        .btn-selection.inactive:hover { border-color: #fca5a5; color: #dc2626; }
+
+        .matrix-cell {
+            border: 1px solid #e2e8f0;
+            padding: 1rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: 'Oswald', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .matrix-cell:hover { background: #fff1f2; }
+        .matrix-cell.selected { background: #fff1f2; }
+        
+        .checkbox-square {
+            width: 2.5rem;
+            height: 2.5rem;
+            border: 2.5px solid #1e293b;
+            border-radius: 0.375rem;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto;
+            transition: all 0.15s;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.10);
+        }
+        .matrix-cell:hover .checkbox-square { border-color: #dc2626; }
+        .checkbox-square.active { border-color: #dc2626; background: #dc2626; box-shadow: 0 2px 8px rgba(220,38,38,0.35); }
 
         .card-animation { animation: certSlideUp 0.6s cubic-bezier(0.2, 1, 0.3, 1) forwards; }
         @keyframes certSlideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
@@ -109,18 +161,69 @@
             animation: alertFade 0.3s ease forwards;
         }
         @keyframes alertFade { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Audit title card style */
+        .audit-title-card {
+            text-align: center;
+            padding: 2.5rem 0;
+        }
+        .audit-title-card .audit-icon {
+            width: 4rem; height: 4rem;
+            color: #dc2626;
+            margin: 0 auto 1.5rem;
+            opacity: 0.15;
+        }
+        .audit-title-card h2 {
+            font-family: 'Oswald', sans-serif;
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 900;
+            text-transform: uppercase;
+            font-style: italic;
+            line-height: 1;
+        }
+        .audit-title-card .divider {
+            height: 4px; width: 3rem;
+            background: #dc2626;
+            margin: 1.5rem auto 1rem;
+        }
+        .audit-title-card .desc {
+            font-size: 0.8rem;
+            color: #94a3b8;
+            font-weight: 600;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            font-style: italic;
+            margin-top: 0.5rem;
+        }
     </style>
     <script>
         document.addEventListener('alpine:init', () => {
             Alpine.data('formApp', () => ({
+                // Steps:
+                // 0  = landing
+                // 1  = PERSONAL DETAILS AUDIT title card  ← NEW
+                // 2  = full name
+                // 3  = SAP ID
+                // 4  = email
+                // 5  = contact number
+                // 6  = ACADEMIC AUDIT title card           ← NEW
+                // 7  = year
+                // 8  = section
+                // 9  = branch
+                // 10 = LEGACY AUDIT title card
+                // 11 = prior member?
+                // 12 = experience grid
+                // 13 = core roles
+                // 14 = wing objective
+                // 15 = review
                 step: 0,
-                totalSteps: 15,
+                totalSteps: 16,
                 submitted: false,
                 loading: false,
                 isWebMaster: false,
                 showAlert: false,
                 errorText: '',
-                scriptUrl: 'https://script.google.com/macros/s/AKfycbz9mLCJfaep1j4tjkkIkrqhiof6l0P0K1qrjXAXkS-FUUi_HK_Yhf5gdOQTztliOm2o/exec',
+                scriptUrl: 'https://script.google.com/macros/s/AKfycby8XAgQXbE2hfJG8twyU31bLbBrh_kUzYJLjnPmKuV2115-TH-HzcU1qj8UJGZGhu8B/exec',
                 formData: {
                     name: '', year: '', section: '', sapId: '', email: '', contact: '', branch: '',
                     wasMember: '', prevDept: '', chapterType: [], roles: []
@@ -136,28 +239,35 @@
                     "Media Production Lead": "Visual storytelling, cinematography, and post-production.",
                     "Technical Lead": "Curating hackathons, workshops, and high-end tech projects."
                 },
-                init() { lucide.createIcons(); },
+                matrixRows: ['TECHNICAL', 'EVENTS', 'FINANCE', 'PR', 'SOCIAL MEDIA & DESIGN', 'MEDIA PRODUCTION'],
+                matrixCols: ['LEAD', 'MEMBER'],
+                // Title-card steps that auto-advance on "Confirm Protocol" — no validation needed
+                titleCardSteps: [1, 6, 10],
+                init() { 
+                    lucide.createIcons(); 
+                },
                 triggerError(msg) {
                     this.errorText = msg;
                     this.showAlert = true;
                     setTimeout(() => { this.showAlert = false; }, 4000);
                 },
                 handleNext() {
-                    // Validation Logic
-                    if (this.step === 1 && !this.formData.name) return this.triggerError("DESIGNATION NAME REQUIRED");
-                    if (this.step === 2 && this.formData.sapId.length !== 11) return this.triggerError("SAP ID MUST BE EXACTLY 11 DIGITS");
-                    if (this.step === 3 && !this.formData.email.includes('@')) return this.triggerError("VALID EMAIL ADDRESS REQUIRED");
-                    if (this.step === 4 && this.formData.contact.length < 10) return this.triggerError("VALID CONTACT NUMBER REQUIRED");
-                    if (this.step === 6 && !this.formData.year) return this.triggerError("SELECT ACADEMIC YEAR");
-                    if (this.step === 7 && !this.formData.section) return this.triggerError("SELECT SECTION UNIT");
-                    if (this.step === 8 && !this.formData.branch) return this.triggerError("SELECT ACADEMIC BRANCH");
-                    if (this.step === 10 && !this.formData.wasMember) return this.triggerError("SELECT LEGACY STATUS");
-                    if (this.step === 12 && this.formData.roles.length === 0) return this.triggerError("SELECT AT LEAST ONE ROLE");
-                    if (this.step === 13 && this.formData.chapterType.length === 0) return this.triggerError("SELECT AT LEAST ONE WING");
+                    // Validation (mapped to new step numbers)
+                    if (this.step === 2 && !this.formData.name) return this.triggerError("NAME REQUIRED");
+                    if (this.step === 3 && this.formData.sapId.length !== 11) return this.triggerError("SAP ID MUST BE 11 DIGITS");
+                    if (this.step === 4 && !this.formData.email.includes('@')) return this.triggerError("VALID EMAIL REQUIRED");
+                    if (this.step === 5 && this.formData.contact.length < 10) return this.triggerError("10-DIGIT CONTACT REQUIRED");
+                    if (this.step === 7 && !this.formData.year) return this.triggerError("SELECT YEAR");
+                    if (this.step === 8 && !this.formData.section) return this.triggerError("SELECT SECTION");
+                    if (this.step === 9 && !this.formData.branch) return this.triggerError("SELECT BRANCH");
+                    if (this.step === 11 && !this.formData.wasMember) return this.triggerError("SELECT LEGACY STATUS");
+                    if (this.step === 12 && !this.formData.prevDept) return this.triggerError("SELECT GRID INTERSECTION");
+                    if (this.step === 13 && this.formData.roles.length === 0) return this.triggerError("SELECT AT LEAST ONE ROLE");
+                    if (this.step === 14 && this.formData.chapterType.length === 0) return this.triggerError("SELECT AT LEAST ONE WING");
 
-                    // Navigation Logic
-                    if (this.step === 10 && this.formData.wasMember === 'No') {
-                        this.step += 2; // Skip Dept Input
+                    // Skip experience grid if not a prior member
+                    if (this.step === 11 && this.formData.wasMember === 'No') {
+                        this.step += 2;
                     } else if (this.step < this.totalSteps - 1) {
                         this.step++;
                     } else {
@@ -166,7 +276,7 @@
                     this.$nextTick(() => lucide.createIcons());
                 },
                 handleBack() {
-                    if (this.step === 12 && this.formData.wasMember === 'No') {
+                    if (this.step === 13 && this.formData.wasMember === 'No') {
                         this.step -= 2;
                     } else if (this.step > 0) {
                         this.step--;
@@ -191,9 +301,8 @@
                             body: JSON.stringify(this.formData)
                         });
                         this.submitted = true;
-                        this.$nextTick(() => lucide.createIcons());
                     } catch (error) { 
-                        this.triggerError("ENCRYPTION FAILURE: RETRY SUBMISSION");
+                        this.triggerError("SUBMISSION ERROR - RETRY");
                     } finally { this.loading = false; }
                 }
             }));
@@ -206,7 +315,6 @@
     <div class="bg-layers"></div>
     <div class="bg-grid"></div>
 
-    <!-- Custom Alert -->
     <div x-data x-show="$data.showAlert" x-cloak class="fixed top-6 left-1/2 -translate-x-1/2 z-[100] custom-alert">
         <div class="bg-red-600 text-white px-8 py-4 title-oswald italic font-bold shadow-2xl border-l-8 border-black flex items-center gap-4">
             <i data-lucide="alert-triangle" class="w-6 h-6"></i>
@@ -217,13 +325,12 @@
     <div x-data="formApp" x-cloak class="card-frame card-animation">
         <div class="corner tl"></div><div class="corner tr"></div><div class="corner bl"></div><div class="corner br"></div>
 
-        <!-- Success View -->
         <template x-if="submitted">
             <div class="flex-grow flex flex-col items-center justify-center p-8 sm:p-12 text-center relative z-10">
                 <div class="w-20 h-20 bg-red-600 text-white rounded-full flex items-center justify-center mb-6 shadow-2xl">
                     <i data-lucide="shield-check" class="w-10 h-10"></i>
                 </div>
-                <h1 class="title-oswald text-4xl sm:text-5xl font-black text-black italic leading-tight">Transmission<br>Successful</h1>
+                <h1 class="title-oswald text-4xl sm:text-5xl font-black text-black italic leading-tight uppercase">Transmission Successful</h1>
                 <div class="h-1 w-24 bg-red-600 my-6 mx-auto"></div>
                 <p class="text-slate-500 text-lg font-medium max-w-lg mb-8 italic">Your leadership credentials for the 2026 term have been successfully processed.</p>
                 
@@ -231,7 +338,7 @@
                     <div class="mb-10 p-6 border-2 border-red-600 bg-black text-white text-left max-w-lg w-full relative overflow-hidden shadow-2xl">
                         <div class="absolute -top-4 -right-4 opacity-10"><i data-lucide="code" class="w-24 h-24"></i></div>
                         <h4 class="tech-orbitron text-red-500 text-[10px] tracking-[5px] mb-2 uppercase font-bold">Vetting Phase</h4>
-                        <p class="title-oswald text-2xl font-bold mb-3 italic leading-none">WebSprint Selection</p>
+                        <p class="title-oswald text-2xl font-bold mb-3 italic leading-none uppercase">WebSprint Selection</p>
                         <p class="text-xs text-slate-400 mb-6 font-medium leading-relaxed italic">Technical architects must join the WebSprint vetting channel for immediate brief and testing.</p>
                         <a href="https://chat.whatsapp.com/F7vsmSemKOfEH9mM07cgs9?mode=gi_t" target="_blank" class="btn-action w-full bg-red-600">
                             Join WebSprint <i data-lucide="external-link" class="w-4 h-4"></i>
@@ -245,15 +352,13 @@
             </div>
         </template>
 
-        <!-- Form View -->
         <template x-if="!submitted">
             <div class="flex-grow flex flex-col relative z-10 h-full">
                 
-                <!-- Persistent Header -->
-                <div class="p-6 sm:p-10 pb-4 flex justify-between items-start sm:items-end">
+                <div class="p-6 sm:p-10 pb-4 flex justify-between items-start">
                     <div class="flex flex-col pr-4">
                         <span class="tech-orbitron text-[9px] text-red-600 font-bold uppercase tracking-[4px] sm:tracking-[6px]">ACM Leadership Portal</span>
-                        <span class="title-oswald text-xl sm:text-2xl font-black italic truncate" x-text="step === 0 ? 'ACCESS AUTHORIZATION' : 'RECRUITMENT 2026'"></span>
+                        <span class="title-oswald text-xl sm:text-2xl font-black italic truncate uppercase" x-text="step === 0 ? 'ACCESS AUTHORIZATION' : 'RECRUITMENT 2026'"></span>
                     </div>
                     <div class="text-right flex flex-col items-end shrink-0">
                         <span class="tech-orbitron text-[8px] sm:text-[9px] text-slate-400 font-bold uppercase tracking-widest leading-none mb-1" x-text="`S-INDEX: ${step + 1}`"></span>
@@ -261,17 +366,15 @@
                     </div>
                 </div>
 
-                <!-- Progress Bar -->
                 <div class="px-6 sm:px-10 mb-6">
                     <div class="h-[2px] w-full bg-slate-100 relative">
                         <div class="h-full bg-red-600 transition-all duration-700 shadow-[0_0_15px_rgba(200,24,26,0.5)]" :style="`width: ${((step + 1) / totalSteps) * 100}%`"></div>
                     </div>
                 </div>
 
-                <!-- Main Interaction Area -->
                 <div class="px-6 sm:px-20 flex-grow flex flex-col justify-center">
-                    
-                    <!-- Landing -->
+
+                    <!-- STEP 0: Landing -->
                     <div x-show="step === 0" class="text-center card-animation">
                         <div class="flex flex-col items-center mb-6">
                             <img src="nmims.png" alt="NMIMS" class="h-10 sm:h-14 object-contain mb-3">
@@ -284,48 +387,61 @@
                         <p class="tech-orbitron text-[8px] sm:text-[9px] text-slate-500 font-bold uppercase tracking-[2px] mb-8 leading-relaxed max-w-md mx-auto">
                             SVKM's NMIMS Indore Student Chapter <br> Association for Computing Machinery (ACM)
                         </p>
-
                         <div class="title-oswald text-7xl sm:text-9xl font-black text-black leading-[0.8] italic mb-6">ACM<br><span class="text-red-600">2026</span></div>
                         <div class="h-1 w-24 bg-red-600 mx-auto mb-8"></div>
                         <p class="text-slate-500 font-semibold tracking-[4px] sm:tracking-[5px] uppercase text-[10px]">student chapter leadership applications</p>
                         <p class="mt-6 text-slate-600 font-medium italic max-w-sm mx-auto text-base leading-relaxed">Initiating search for visionaries to redefine the NMIMS Indore technical ecosystem.</p>
                     </div>
 
-                    <!-- Steps -->
-                    <div x-show="step === 1" class="card-animation">
+                    <!-- STEP 1: PERSONAL DETAILS AUDIT title card (NEW) -->
+                    <div x-show="step === 1" class="audit-title-card card-animation">
+                        <i data-lucide="user" class="audit-icon"></i>
+                        <h2>Personal Details Audit</h2>
+                        <div class="divider"></div>
+                        <p class="desc">Provide your identity credentials — name, SAP ID, email, and contact number.</p>
+                    </div>
+
+                    <!-- STEP 2: Full Name -->
+                    <div x-show="step === 2" class="card-animation">
                         <label class="tech-orbitron text-[10px] text-red-600 font-bold tracking-[4px] mb-4 block uppercase">Personal Details</label>
                         <h2 class="title-oswald text-3xl sm:text-5xl font-black uppercase mb-10 italic leading-none">Your Full Name</h2>
                         <input type="text" class="form-input" placeholder="FULL LEGAL NAME" x-model="formData.name" @keydown.enter="handleNext">
                     </div>
 
-                    <div x-show="step === 2" class="card-animation">
-                        <label class="tech-orbitron text-[10px] text-red-600 font-bold tracking-[4px] mb-4 block uppercase">Authorization Protocol</label>
+                    <!-- STEP 3: SAP ID -->
+                    <div x-show="step === 3" class="card-animation">
+                        <label class="tech-orbitron text-[10px] text-red-600 font-bold tracking-[4px] mb-4 block uppercase">Protocol</label>
                         <h2 class="title-oswald text-3xl sm:text-5xl font-black uppercase mb-2 italic leading-none">SAP ID</h2>
-                        <p class="text-[10px] text-slate-400 mb-10 font-bold uppercase tracking-[3px]">Strict 11-Digit Numerical Input</p>
+                        <p class="text-[10px] text-slate-400 mb-10 font-bold uppercase tracking-[3px]">Strict 11-Digit numerical input</p>
                         <input type="text" maxlength="11" class="form-input tech-orbitron" placeholder="7XXXXXXXXXX" x-model="formData.sapId" @keydown.enter="handleNext">
                     </div>
 
-                    <div x-show="step === 3" class="card-animation">
-                        <label class="tech-orbitron text-[10px] text-red-600 font-bold tracking-[4px] mb-4 block uppercase">Contact Protocol</label>
-                        <h2 class="title-oswald text-3xl sm:text-5xl font-black uppercase mb-10 italic leading-none">Email Address</h2>
-                        <input type="email" class="form-input" placeholder="UNIVERSITY OR PERSONAL EMAIL" x-model="formData.email" @keydown.enter="handleNext">
-                    </div>
-
+                    <!-- STEP 4: Email -->
                     <div x-show="step === 4" class="card-animation">
-                        <label class="tech-orbitron text-[10px] text-red-600 font-bold tracking-[4px] mb-4 block uppercase">Contact Protocol</label>
+                        <label class="tech-orbitron text-[10px] text-red-600 font-bold tracking-[4px] mb-4 block uppercase">Contact</label>
+                        <h2 class="title-oswald text-3xl sm:text-5xl font-black uppercase mb-10 italic leading-none">Email Address</h2>
+                        <input type="email" class="form-input" placeholder="UNIVERSITY/PERSONAL EMAIL" x-model="formData.email" @keydown.enter="handleNext">
+                    </div>
+
+                    <!-- STEP 5: Contact -->
+                    <div x-show="step === 5" class="card-animation">
+                        <label class="tech-orbitron text-[10px] text-red-600 font-bold tracking-[4px] mb-4 block uppercase">Contact</label>
                         <h2 class="title-oswald text-3xl sm:text-5xl font-black uppercase mb-10 italic leading-none">Contact Number</h2>
-                        <input type="text" maxlength="10" class="form-input" placeholder="10-DIGIT MOBILE NUMBER" x-model="formData.contact" @keydown.enter="handleNext">
+                        <input type="text" maxlength="10" class="form-input" placeholder="10-DIGIT MOBILE" x-model="formData.contact" @keydown.enter="handleNext">
                     </div>
 
-                    <div x-show="step === 5" class="text-center card-animation py-10">
-                        <i data-lucide="server" class="w-16 h-16 text-red-600 mx-auto mb-6 opacity-10"></i>
-                        <h2 class="title-oswald text-4xl sm:text-5xl font-black uppercase italic leading-none">Academic<br>Registry</h2>
-                        <div class="h-1 w-12 bg-red-600 mx-auto mt-6"></div>
+                    <!-- STEP 6: ACADEMIC AUDIT title card (NEW) -->
+                    <div x-show="step === 6" class="audit-title-card card-animation">
+                        <i data-lucide="book-open" class="audit-icon"></i>
+                        <h2>Academic Audit</h2>
+                        <div class="divider"></div>
+                        <p class="desc">Specify your current year of study, section, and engineering branch.</p>
                     </div>
 
-                    <div x-show="step === 6" class="card-animation">
-                        <label class="tech-orbitron text-[10px] text-red-600 font-bold tracking-[4px] mb-4 block uppercase">Standing Status</label>
-                        <h2 class="title-oswald text-3xl sm:text-5xl font-black uppercase mb-10 italic leading-none">Academic Year</h2>
+                    <!-- STEP 7: Year -->
+                    <div x-show="step === 7" class="card-animation text-center">
+                        <label class="tech-orbitron text-[10px] text-red-600 font-bold tracking-[4px] mb-4 block uppercase">Academics</label>
+                        <h2 class="title-oswald text-3xl sm:text-5xl font-black uppercase mb-10 italic leading-none">Year</h2>
                         <div class="grid grid-cols-2 gap-4">
                             <template x-for="yr in ['I', 'II', 'III', 'IV']">
                                 <button @click="formData.year = yr; handleNext()" class="btn-selection" :class="formData.year === yr ? 'active' : 'inactive'" x-text="yr"></button>
@@ -333,8 +449,9 @@
                         </div>
                     </div>
 
-                    <div x-show="step === 7" class="card-animation">
-                        <label class="tech-orbitron text-[10px] text-red-600 font-bold tracking-[4px] mb-4 block uppercase">Cluster Unit</label>
+                    <!-- STEP 8: Section -->
+                    <div x-show="step === 8" class="card-animation text-center">
+                        <label class="tech-orbitron text-[10px] text-red-600 font-bold tracking-[4px] mb-4 block uppercase">Cluster</label>
                         <h2 class="title-oswald text-3xl sm:text-5xl font-black uppercase mb-10 italic leading-none">Section</h2>
                         <div class="grid grid-cols-3 gap-4">
                             <template x-for="sec in ['A', 'B', 'C']">
@@ -343,9 +460,10 @@
                         </div>
                     </div>
 
-                    <div x-show="step === 8" class="card-animation">
-                        <label class="tech-orbitron text-[10px] text-red-600 font-bold tracking-[4px] mb-4 block uppercase">Stream Field</label>
-                        <h2 class="title-oswald text-3xl sm:text-5xl font-black uppercase mb-10 italic leading-none">Branch</h2>
+                    <!-- STEP 9: Branch -->
+                    <div x-show="step === 9" class="card-animation text-center">
+                        <label class="tech-orbitron text-[10px] text-red-600 font-bold tracking-[4px] mb-4 block uppercase">Branch</label>
+                        <h2 class="title-oswald text-3xl sm:text-5xl font-black uppercase mb-10 italic leading-none">Stream</h2>
                         <div class="space-y-4">
                             <template x-for="br in ['CE', 'AI&DS', 'MBA Tech']">
                                 <button @click="formData.branch = br; handleNext()" class="btn-selection w-full block" :class="formData.branch === br ? 'active' : 'inactive'" x-text="br"></button>
@@ -353,13 +471,16 @@
                         </div>
                     </div>
 
-                    <div x-show="step === 9" class="text-center card-animation py-10">
-                        <i data-lucide="shield" class="w-16 h-16 text-red-600 mx-auto mb-6 opacity-10"></i>
-                        <h2 class="title-oswald text-4xl sm:text-5xl font-black uppercase italic leading-none">Legacy<br>Audit</h2>
-                        <div class="h-1 w-12 bg-red-600 mx-auto mt-6"></div>
+                    <!-- STEP 10: LEGACY AUDIT title card -->
+                    <div x-show="step === 10" class="audit-title-card card-animation">
+                        <i data-lucide="shield" class="audit-icon"></i>
+                        <h2>Legacy Audit</h2>
+                        <div class="divider"></div>
+                        <p class="desc">Declare your prior ACM membership and department history for service record verification.</p>
                     </div>
 
-                    <div x-show="step === 10" class="card-animation">
+                    <!-- STEP 11: Prior Member -->
+                    <div x-show="step === 11" class="card-animation">
                         <label class="tech-orbitron text-[10px] text-red-600 font-bold tracking-[4px] mb-4 block uppercase">Service Record</label>
                         <h2 class="title-oswald text-3xl sm:text-5xl font-black uppercase mb-10 italic leading-none">Prior Member?</h2>
                         <div class="flex flex-col sm:flex-row gap-4">
@@ -368,19 +489,45 @@
                         </div>
                     </div>
 
-                    <div x-show="step === 11" class="card-animation">
-                        <label class="tech-orbitron text-[10px] text-red-600 font-bold tracking-[4px] mb-4 block uppercase">Division Field</label>
-                        <h2 class="title-oswald text-3xl sm:text-5xl font-black uppercase mb-10 italic leading-none">Previous Dept</h2>
-                        <input type="text" class="form-input" placeholder="e.g. TECHNICAL" x-model="formData.prevDept" @keydown.enter="handleNext">
+                    <!-- STEP 12: Experience Grid (MATRIX) -->
+                    <div x-show="step === 12" class="card-animation">
+                        <h2 class="title-oswald text-3xl sm:text-5xl font-black uppercase mb-6 italic leading-none">Experience Grid</h2>
+                        
+                        <div class="overflow-x-auto border-2 border-slate-900 shadow-xl">
+                            <div class="min-w-[450px] grid grid-cols-3">
+                                <!-- Headers -->
+                                <div class="bg-black text-white p-3 text-[10px] font-bold uppercase tracking-widest italic">DEPT / ROLE</div>
+                                <template x-for="col in matrixCols">
+                                    <div class="bg-red-600 text-white p-3 text-center text-[10px] font-bold uppercase tracking-widest" x-text="col"></div>
+                                </template>
+
+                                <!-- Grid Rows -->
+                                <template x-for="row in matrixRows">
+                                    <div class="contents">
+                                        <div class="p-4 border-b border-slate-200 bg-slate-50 text-[11px] font-black title-oswald italic uppercase" x-text="row"></div>
+                                        <template x-for="col in matrixCols">
+                                            <div @click="formData.prevDept = row + ', ' + col; setTimeout(() => handleNext(), 300)" 
+                                                 class="matrix-cell border-b flex items-center justify-center" 
+                                                 :class="formData.prevDept === (row + ', ' + col) ? 'selected' : ''">
+                                                <div class="checkbox-square" :class="formData.prevDept === (row + ', ' + col) ? 'active' : ''">
+                                                    <svg x-show="formData.prevDept === (row + ', ' + col)" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                                </div>
+                                            </div>
+                                        </template>
+                                    </div>
+                                </template>
+                            </div>
+                        </div>
+                        <p class="mt-4 text-[10px] text-slate-400 font-bold italic uppercase tracking-wider">SELECT THE INTERSECTION OF YOUR PREVIOUS DEPARTMENT AND RANK</p>
                     </div>
 
-                    <!-- Roles Selection -->
-                    <div x-show="step === 12" class="card-animation">
+                    <!-- STEP 13: Core Roles -->
+                    <div x-show="step === 13" class="card-animation">
                         <label class="tech-orbitron text-[10px] text-red-600 font-bold tracking-[4px] mb-4 block uppercase">Target Designation</label>
                         <h2 class="title-oswald text-3xl sm:text-5xl font-black uppercase mb-6 italic leading-none text-red-600">Core Roles</h2>
-                        <div class="grid grid-cols-1 gap-2 max-h-72 overflow-y-auto pr-2 custom-scrollbar">
+                        <div class="grid grid-cols-1 gap-2 max-h-72 overflow-y-auto pr-2">
                             <template x-for="role in Object.keys(roleData)">
-                                <label class="flex items-center gap-4 p-4 border rounded-lg cursor-pointer transition-all" :class="formData.roles.includes(role) ? 'border-red-600 bg-red-50' : 'border-slate-400 bg-white hover:border-red-600'">
+                                <label class="flex items-center gap-4 p-4 border-2 border-slate-900 rounded-lg cursor-pointer transition-all" :class="formData.roles.includes(role) ? 'border-red-600 bg-red-50' : 'bg-white hover:border-red-600'">
                                     <input type="checkbox" :value="role" x-model="formData.roles" class="w-5 h-5 accent-red-600">
                                     <span class="title-oswald font-bold text-lg italic uppercase" x-text="role"></span>
                                 </label>
@@ -388,13 +535,13 @@
                         </div>
                     </div>
 
-                    <!-- Chapter Selection -->
-                    <div x-show="step === 13" class="card-animation">
+                    <!-- STEP 14: Wing Objective -->
+                    <div x-show="step === 14" class="card-animation">
                         <label class="tech-orbitron text-[10px] text-red-600 font-bold tracking-[4px] mb-4 block uppercase">Strategic Scope</label>
-                        <h2 class="title-oswald text-3xl sm:text-5xl font-black uppercase mb-10 italic leading-none">Wing Objective</h2>
+                        <h2 class="title-oswald text-3xl sm:text-5xl font-black uppercase mb-10 italic leading-none uppercase">Wing Objective</h2>
                         <div class="space-y-4">
                             <template x-for="ch in ['ACM', 'ACM-W']">
-                                <label class="flex items-center gap-6 p-6 border-2 cursor-pointer transition-all hover:bg-slate-50 group rounded-xl" :class="formData.chapterType.includes(ch) ? 'border-red-600 bg-red-50' : 'border-slate-400'">
+                                <label class="flex items-center gap-6 p-6 border-2 border-slate-900 cursor-pointer transition-all hover:bg-slate-50 group rounded-xl" :class="formData.chapterType.includes(ch) ? 'border-red-600 bg-red-50' : 'bg-white'">
                                     <input type="checkbox" :value="ch" x-model="formData.chapterType" class="w-8 h-8 accent-red-600">
                                     <span class="title-oswald text-3xl font-black italic group-hover:text-red-600 transition-colors uppercase" x-text="ch"></span>
                                 </label>
@@ -402,28 +549,29 @@
                         </div>
                     </div>
 
-                    <div x-show="step === 14" class="card-animation">
-                        <label class="tech-orbitron text-[10px] text-red-600 font-bold tracking-[4px] mb-4 block uppercase">Final Verification</label>
-                        <h2 class="title-oswald text-3xl sm:text-5xl font-black uppercase mb-6 italic leading-none">Review Phase</h2>
-                        <div class="space-y-4 max-h-80 overflow-y-auto pr-4 custom-scrollbar">
+                    <!-- STEP 15: Review -->
+                    <div x-show="step === 15" class="card-animation">
+                        <label class="tech-orbitron text-[10px] text-red-600 font-bold tracking-[4px] mb-4 block uppercase">Verification</label>
+                        <h2 class="title-oswald text-3xl sm:text-5xl font-black uppercase mb-6 italic leading-none uppercase">Review Phase</h2>
+                        <div class="space-y-4 max-h-80 overflow-y-auto pr-4">
                             <template x-for="role in formData.roles">
                                 <div class="p-6 bg-black text-white border-l-[10px] border-red-600 shadow-xl">
-                                    <h4 class="title-oswald text-2xl font-black text-red-600 mb-2 italic tracking-[2px]" x-text="role"></h4>
+                                    <h4 class="title-oswald text-2xl font-black text-red-600 mb-2 italic tracking-[2px] uppercase" x-text="role"></h4>
                                     <p class="text-xs font-medium leading-relaxed italic opacity-70" x-text="roleData[role]"></p>
                                 </div>
                             </template>
                         </div>
                     </div>
+
                 </div>
 
-                <!-- Footer Control Area -->
                 <div class="p-6 sm:px-20 pb-12 sm:pb-16 mt-4">
                     <div class="flex flex-col sm:flex-row gap-6 items-center">
                         <button x-show="step > 0" @click="handleBack" class="title-oswald text-slate-400 font-bold hover:text-black transition-colors flex items-center gap-2 group tracking-[3px]">
                             <i data-lucide="chevron-left" class="w-5 h-5 group-hover:-translate-x-1 transition-transform"></i> Return
                         </button>
                         <button @click="handleNext" :disabled="loading" class="btn-action w-full sm:flex-grow">
-                            <span x-text="loading ? 'ENCRYPTING...' : (step === 0 ? 'Initialize Entry' : (step === 14 ? 'Authorize Submission' : 'Confirm Protocol'))"></span>
+                            <span x-text="loading ? 'ENCRYPTING...' : (step === 0 ? 'Initialize Entry' : (step === 15 ? 'Authorize Submission' : 'Confirm Protocol'))"></span>
                             <i x-show="!loading" data-lucide="chevron-right" class="w-5 h-5"></i>
                         </button>
                     </div>
