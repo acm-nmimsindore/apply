@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ACM Leadership Applications 2026</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%23c8181a%22/><text y=%22.9em%22 font-size=%2270%22 fill=%22white%22 font-family=%22Orbitron%22 x=%2250%%22 text-anchor=%22middle%22 font-weight=%22bold%22>A</text></svg>">
-    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;600;700&family=Rajdhani:wght@400;500;600;700&family=Orbitron:wght@400;700&family=Cormorant+Garamond:ital,wght@0,500;1,400;1,600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;600;700&family=Rajdhani:wght@400;500;600;700&family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
@@ -26,10 +26,9 @@
             align-items: center;
             justify-content: center;
             overflow-x: hidden;
-            padding: 20px;
+            padding: 10px;
         }
 
-        /* ── ATMOSPHERIC MOVING BG ── */
         .bg-layers {
             position: fixed; inset: 0; pointer-events: none; z-index: -1;
             background:
@@ -39,10 +38,7 @@
             background-size: 200% 200%;
             animation: gradientShift 12s ease-in-out infinite alternate;
         }
-        @keyframes gradientShift {
-            0% { background-position: 0% 50%; }
-            100% { background-position: 100% 50%; }
-        }
+        @keyframes gradientShift { 0% { background-position: 0% 50%; } 100% { background-position: 100% 50%; } }
 
         .bg-grid {
             position: fixed; inset: 0; pointer-events: none; z-index: -1;
@@ -51,110 +47,83 @@
                 repeating-linear-gradient(90deg, transparent, transparent 47px, rgba(0,0,0,0.015) 47px, rgba(0,0,0,0.015) 48px);
         }
 
-        /* ── CARD DESIGN ── */
         .card-frame {
             position: relative;
             background: #fff;
             box-shadow: 0 24px 80px rgba(0,0,0,0.22);
             border-top: 9px solid var(--red);
             border-bottom: 9px solid var(--red-dark);
-            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
             width: 100%;
-        }
-
-        /* Intelligent Realign Logic */
-        @media (min-width: 1024px) {
-            .card-frame { width: 950px; min-height: 600px; }
-        }
-        @media (max-width: 1023px) {
-            .card-frame { width: 100%; min-height: 85vh; border-radius: 4px; }
+            max-width: 950px;
+            min-height: 620px;
+            display: flex;
+            flex-direction: column;
         }
 
         .corner { position: absolute; width: 18px; height: 18px; border-color: var(--red); border-style: solid; opacity: 0.5; pointer-events: none; z-index: 5; }
-        .corner.tl { top: 20px; left: 20px; border-width: 2px 0 0 2px; }
-        .corner.tr { top: 20px; right: 20px; border-width: 2px 2px 0 0; }
-        .corner.bl { bottom: 20px; left: 20px; border-width: 0 0 2px 2px; }
-        .corner.br { bottom: 20px; right: 20px; border-width: 0 2px 2px 0; }
+        .corner.tl { top: 15px; left: 15px; border-width: 2px 0 0 2px; }
+        .corner.tr { top: 15px; right: 15px; border-width: 2px 2px 0 0; }
+        .corner.bl { bottom: 15px; left: 15px; border-width: 0 0 2px 2px; }
+        .corner.br { bottom: 15px; right: 15px; border-width: 0 2px 2px 0; }
 
-        .inner-border {
-            position: absolute; inset: 12px;
-            border: 1px solid rgba(180,10,10,0.1);
-            pointer-events: none; z-index: 2;
-        }
-
-        /* ── TYPOGRAPHY & BUTTONS ── */
-        .title-oswald { font-family: 'Oswald', sans-serif; text-transform: uppercase; letter-spacing: 3px; }
+        .title-oswald { font-family: 'Oswald', sans-serif; text-transform: uppercase; letter-spacing: 2px; }
         .tech-orbitron { font-family: 'Orbitron', sans-serif; letter-spacing: 2px; }
 
         .form-input { 
-            @apply w-full p-4 bg-slate-50 border-2 border-slate-200 focus:border-red-600 outline-none transition-all text-2xl font-bold text-black placeholder:text-slate-200 rounded-lg;
+            @apply w-full p-4 bg-slate-50 border-2 border-slate-400 focus:border-red-600 outline-none transition-all text-2xl font-bold text-black placeholder:text-slate-300 rounded-lg;
             font-family: 'Oswald', sans-serif;
             letter-spacing: 2px;
         }
 
-        /* Primary Action Buttons */
         .btn-action {
-            padding: 14px 42px;
+            padding: 14px 32px;
             background: var(--red);
-            border: none;
             color: #fff;
             font-family: 'Oswald', sans-serif;
-            font-size: 14px;
+            font-size: 13px;
             letter-spacing: 4px;
             text-transform: uppercase;
             cursor: pointer;
             border-radius: 2px;
             transition: all 0.3s ease;
-            box-shadow: 0 6px 25px rgba(180,10,10,0.3);
+            box-shadow: 0 6px 20px rgba(180,10,10,0.3);
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 10px;
         }
-        .btn-action:hover { background: var(--red-dark); transform: translateY(-2px); box-shadow: 0 8px 30px rgba(180,10,10,0.45); }
+        .btn-action:hover { background: var(--red-dark); transform: translateY(-2px); box-shadow: 0 8px 25px rgba(180,10,10,0.45); }
         .btn-action:active { transform: translateY(0); scale: 0.98; }
-        .btn-action:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
 
-        /* Secondary/Selection Buttons */
         .btn-selection {
-            @apply flex-1 py-4 border-2 font-bold uppercase tracking-widest text-sm transition-all duration-200;
+            @apply flex-1 py-4 border-2 font-bold uppercase tracking-widest text-sm transition-all duration-200 rounded-lg;
             font-family: 'Oswald', sans-serif;
         }
         .btn-selection.active { @apply bg-black text-white border-black shadow-lg; }
-        .btn-selection.inactive { @apply bg-white text-slate-400 border-slate-100 hover:border-red-300 hover:text-red-600; }
-
-        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
-        .custom-scrollbar::-webkit-scrollbar-thumb { background: var(--red); border-radius: 10px; }
+        .btn-selection.inactive { @apply bg-white text-slate-400 border-slate-200 hover:border-red-300 hover:text-red-600; }
 
         .card-animation { animation: certSlideUp 0.6s cubic-bezier(0.2, 1, 0.3, 1) forwards; }
-        @keyframes certSlideUp {
-            from { opacity: 0; transform: translateY(40px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+        @keyframes certSlideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
 
-        .red-rule {
-            width: 120px; height: 3px;
-            background: linear-gradient(90deg, transparent, var(--red) 20%, var(--red) 80%, transparent);
-            margin: 10px auto;
+        .custom-alert {
+            animation: alertFade 0.3s ease forwards;
         }
-
-        .logo-slot {
-            width: 60px; height: 60px; display: flex; align-items: center; justify-content: center;
-        }
-        .logo-slot img { max-width: 100%; max-height: 100%; object-fit: contain; }
+        @keyframes alertFade { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
     <script>
         document.addEventListener('alpine:init', () => {
             Alpine.data('formApp', () => ({
                 step: 0,
-                totalSteps: 14,
+                totalSteps: 15,
                 submitted: false,
                 loading: false,
                 isWebMaster: false,
-                scriptUrl: 'https://script.google.com/macros/s/AKfycbxYXnWKIgH8O3Ga-_WTNesi5rel-7FqPZmAqLzg0QQbQLIbuKt35MHn5EDoicUPRAZF/exec',
+                showAlert: false,
+                errorText: '',
+                scriptUrl: 'https://script.google.com/macros/s/AKfycbwf5Kync6ka2JFALWbT1UnozQuni2KJb2d3kKak17P-SNW14gAOoc66Q-X1a-2Ud_Xa/exec',
                 formData: {
-                    name: '', year: '', section: '', sapId: '', rollNo: '', branch: '',
-                    wasMember: 'No', prevDept: '', chapterType: [], roles: []
+                    name: '', year: '', section: '', sapId: '', email: '', contact: '', branch: '',
+                    wasMember: '', prevDept: '', chapterType: [], roles: []
                 },
                 roleData: {
                     "Vice-Chair": "Strategic operations and bridging core leadership gaps.",
@@ -168,12 +137,27 @@
                     "Technical Lead": "Curating hackathons, workshops, and high-end tech projects."
                 },
                 init() { lucide.createIcons(); },
+                triggerError(msg) {
+                    this.errorText = msg;
+                    this.showAlert = true;
+                    setTimeout(() => { this.showAlert = false; }, 4000);
+                },
                 handleNext() {
-                    if (this.step === 2 && this.formData.sapId.length !== 11) {
-                        alert("SAP ID MUST BE EXACTLY 11 DIGITS."); return;
-                    }
+                    // Validation Logic
+                    if (this.step === 1 && !this.formData.name) return this.triggerError("DESIGNATION NAME REQUIRED");
+                    if (this.step === 2 && this.formData.sapId.length !== 11) return this.triggerError("SAP ID MUST BE EXACTLY 11 DIGITS");
+                    if (this.step === 3 && !this.formData.email.includes('@')) return this.triggerError("VALID EMAIL ADDRESS REQUIRED");
+                    if (this.step === 4 && this.formData.contact.length < 10) return this.triggerError("VALID CONTACT NUMBER REQUIRED");
+                    if (this.step === 6 && !this.formData.year) return this.triggerError("SELECT ACADEMIC YEAR");
+                    if (this.step === 7 && !this.formData.section) return this.triggerError("SELECT SECTION UNIT");
+                    if (this.step === 8 && !this.formData.branch) return this.triggerError("SELECT ACADEMIC BRANCH");
+                    if (this.step === 10 && !this.formData.wasMember) return this.triggerError("SELECT LEGACY STATUS");
+                    if (this.step === 12 && this.formData.roles.length === 0) return this.triggerError("SELECT AT LEAST ONE ROLE");
+                    if (this.step === 13 && this.formData.chapterType.length === 0) return this.triggerError("SELECT AT LEAST ONE WING");
+
+                    // Navigation Logic
                     if (this.step === 10 && this.formData.wasMember === 'No') {
-                        this.step += 2;
+                        this.step += 2; // Skip Dept Input
                     } else if (this.step < this.totalSteps - 1) {
                         this.step++;
                     } else {
@@ -189,6 +173,12 @@
                     }
                     this.$nextTick(() => lucide.createIcons());
                 },
+                resetForm() {
+                    this.step = 0;
+                    this.submitted = false;
+                    this.formData = { name: '', year: '', section: '', sapId: '', email: '', contact: '', branch: '', wasMember: '', prevDept: '', chapterType: [], roles: [] };
+                    this.$nextTick(() => lucide.createIcons());
+                },
                 async submitForm() {
                     this.loading = true;
                     this.isWebMaster = this.formData.roles.includes('Web-Master');
@@ -202,44 +192,56 @@
                         });
                         this.submitted = true;
                         this.$nextTick(() => lucide.createIcons());
-                    } catch (error) { console.error(error); }
-                    finally { this.loading = false; }
+                    } catch (error) { 
+                        this.triggerError("ENCRYPTION FAILURE: RETRY SUBMISSION");
+                    } finally { this.loading = false; }
                 }
             }));
         });
     </script>
     <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
 </head>
-<body class="p-4 sm:p-8">
+<body>
 
     <div class="bg-layers"></div>
     <div class="bg-grid"></div>
 
-    <div x-data="formApp" x-cloak class="card-frame card-animation flex flex-col">
-        <div class="inner-border"></div>
+    <!-- Custom Alert -->
+    <div x-data x-show="$data.showAlert" x-cloak class="fixed top-6 left-1/2 -translate-x-1/2 z-[100] custom-alert">
+        <div class="bg-red-600 text-white px-8 py-4 title-oswald italic font-bold shadow-2xl border-l-8 border-black flex items-center gap-4">
+            <i data-lucide="alert-triangle" class="w-6 h-6"></i>
+            <span x-text="$data.errorText"></span>
+        </div>
+    </div>
+
+    <div x-data="formApp" x-cloak class="card-frame card-animation">
         <div class="corner tl"></div><div class="corner tr"></div><div class="corner bl"></div><div class="corner br"></div>
 
         <!-- Success View -->
         <template x-if="submitted">
-            <div class="flex-grow flex flex-col items-center justify-center p-12 text-center relative z-10">
-                <div class="w-24 h-24 bg-red-600 text-white rounded-full flex items-center justify-center mb-8 shadow-2xl">
-                    <i data-lucide="shield-check" class="w-12 h-12"></i>
+            <div class="flex-grow flex flex-col items-center justify-center p-8 sm:p-12 text-center relative z-10">
+                <div class="w-20 h-20 bg-red-600 text-white rounded-full flex items-center justify-center mb-6 shadow-2xl">
+                    <i data-lucide="shield-check" class="w-10 h-10"></i>
                 </div>
-                <h1 class="title-oswald text-5xl font-black text-black italic">Transmission Successful</h1>
-                <div class="red-rule"></div>
-                <p class="text-slate-500 mt-4 text-xl font-medium max-w-lg">Your leadership application for 2026 has been encrypted and logged into our central registry.</p>
+                <h1 class="title-oswald text-4xl sm:text-5xl font-black text-black italic leading-tight">Transmission<br>Successful</h1>
+                <div class="h-1 w-24 bg-red-600 my-6 mx-auto"></div>
+                <p class="text-slate-500 text-lg font-medium max-w-lg mb-8 italic">Your leadership credentials for the 2026 term have been successfully processed.</p>
                 
                 <template x-if="isWebMaster">
-                    <div class="mt-10 p-8 border-2 border-red-600 bg-slate-900 text-white text-left max-w-lg w-full relative overflow-hidden shadow-2xl">
-                        <div class="absolute -top-4 -right-4 opacity-10"><i data-lucide="code" class="w-32 h-32"></i></div>
-                        <h4 class="tech-orbitron text-red-500 text-[10px] tracking-[5px] mb-2 uppercase font-bold">Vetting Protocol</h4>
-                        <p class="title-oswald text-2xl font-bold mb-4 italic">Web-Master Selection Phase</p>
-                        <p class="text-sm text-slate-400 mb-6 leading-relaxed">System architects are required to undergo a technical competition phase. Join the secure channel to receive your brief.</p>
+                    <div class="mb-10 p-6 border-2 border-red-600 bg-black text-white text-left max-w-lg w-full relative overflow-hidden shadow-2xl">
+                        <div class="absolute -top-4 -right-4 opacity-10"><i data-lucide="code" class="w-24 h-24"></i></div>
+                        <h4 class="tech-orbitron text-red-500 text-[10px] tracking-[5px] mb-2 uppercase font-bold">Vetting Phase</h4>
+                        <p class="title-oswald text-2xl font-bold mb-3 italic leading-none">WebSprint Selection</p>
+                        <p class="text-xs text-slate-400 mb-6 font-medium leading-relaxed italic">Technical architects must join the WebSprint vetting channel for immediate brief and testing.</p>
                         <a href="https://chat.whatsapp.com/F7vsmSemKOfEH9mM07cgs9?mode=gi_t" target="_blank" class="btn-action w-full bg-red-600">
-                            Join Dev Command <i data-lucide="external-link" class="w-4 h-4"></i>
+                            Join WebSprint <i data-lucide="external-link" class="w-4 h-4"></i>
                         </a>
                     </div>
                 </template>
+
+                <button @click="resetForm()" class="title-oswald text-slate-400 hover:text-black font-bold uppercase flex items-center gap-2 tracking-widest transition-colors">
+                    <i data-lucide="home" class="w-5 h-5"></i> Return to Command
+                </button>
             </div>
         </template>
 
@@ -248,158 +250,177 @@
             <div class="flex-grow flex flex-col relative z-10 h-full">
                 
                 <!-- Persistent Header -->
-                <div class="p-8 pb-4 flex justify-between items-end">
-                    <div class="flex flex-col">
-                        <span class="tech-orbitron text-[9px] text-red-600 font-bold uppercase tracking-[6px]">ACM Leadership Portal</span>
-                        <span class="title-oswald text-2xl font-black italic" x-text="step === 0 ? 'ACCESS AUTHORIZATION' : 'RECRUITMENT 2026'"></span>
+                <div class="p-6 sm:p-10 pb-4 flex justify-between items-start sm:items-end">
+                    <div class="flex flex-col pr-4">
+                        <span class="tech-orbitron text-[9px] text-red-600 font-bold uppercase tracking-[4px] sm:tracking-[6px]">ACM Leadership Portal</span>
+                        <span class="title-oswald text-xl sm:text-2xl font-black italic truncate" x-text="step === 0 ? 'ACCESS AUTHORIZATION' : 'RECRUITMENT 2026'"></span>
                     </div>
-                    <div class="text-right flex flex-col items-end">
-                        <span class="tech-orbitron text-[9px] text-slate-400 font-bold uppercase tracking-widest" x-text="`S-INDEX: ${step + 1}`"></span>
-                        <span class="title-oswald text-lg font-bold text-black italic leading-none" x-text="`${Math.round((step/totalSteps)*100)}%`"></span>
+                    <div class="text-right flex flex-col items-end shrink-0">
+                        <span class="tech-orbitron text-[8px] sm:text-[9px] text-slate-400 font-bold uppercase tracking-widest leading-none mb-1" x-text="`S-INDEX: ${step + 1}`"></span>
+                        <span class="title-oswald text-base sm:text-lg font-bold text-black italic leading-none" x-text="`${Math.round((step/totalSteps)*100)}%`"></span>
                     </div>
                 </div>
 
                 <!-- Progress Bar -->
-                <div class="px-8 mb-8">
+                <div class="px-6 sm:px-10 mb-6">
                     <div class="h-[2px] w-full bg-slate-100 relative">
                         <div class="h-full bg-red-600 transition-all duration-700 shadow-[0_0_15px_rgba(200,24,26,0.5)]" :style="`width: ${((step + 1) / totalSteps) * 100}%`"></div>
                     </div>
                 </div>
 
                 <!-- Main Interaction Area -->
-                <div class="px-8 sm:px-20 flex-grow flex flex-col justify-center">
+                <div class="px-6 sm:px-20 flex-grow flex flex-col justify-center">
                     
                     <!-- Landing -->
                     <div x-show="step === 0" class="text-center card-animation">
-                        <!-- Logo Row -->
-                        <div class="flex justify-center items-center gap-6 mb-4">
-                            <div class="logo-slot"><img src="nmims.png" alt="NMIMS"></div>
-                            <div class="logo-slot"><img src="acm.png" alt="ACM"></div>
-                            <div class="logo-slot"><img src="acmw.png" alt="ACM-W"></div>
+                        <div class="flex justify-center items-center gap-4 sm:gap-8 mb-6">
+                            <img src="nmims.png" alt="NMIMS" class="h-10 sm:h-14 object-contain">
+                            <img src="acm.png" alt="ACM" class="h-10 sm:h-14 object-contain">
+                            <img src="acmw.png" alt="ACM-W" class="h-10 sm:h-14 object-contain">
                         </div>
-                        <p class="tech-orbitron text-[9px] text-slate-600 font-bold uppercase tracking-[2px] mb-6">
-                            SVKM's NMIMS Indore In Association with Association for Computing Machinery (ACM)
+                        <p class="tech-orbitron text-[8px] sm:text-[9px] text-slate-500 font-bold uppercase tracking-[2px] mb-8 leading-relaxed max-w-md mx-auto">
+                            SVKM's NMIMS Indore In Association with <br> Association for Computing Machinery (ACM)
                         </p>
 
-                        <div class="title-oswald text-7xl sm:text-9xl font-black text-black leading-[0.85] italic mb-6">ACM<br><span class="text-red-600">2026</span></div>
-                        <div class="red-rule w-32"></div>
-                        <p class="mt-8 text-slate-500 font-semibold tracking-[5px] uppercase text-[10px]">Student Chapter Leadership Applications</p>
-                        <p class="mt-4 text-slate-600 font-medium italic max-w-sm mx-auto text-lg leading-relaxed">Open for applications from visionaries ready to redefine the NMIMS Indore technical ecosystem.</p>
+                        <div class="title-oswald text-7xl sm:text-9xl font-black text-black leading-[0.8] italic mb-6">ACM<br><span class="text-red-600">2026</span></div>
+                        <div class="h-1 w-24 bg-red-600 mx-auto mb-8"></div>
+                        <p class="text-slate-500 font-semibold tracking-[4px] sm:tracking-[5px] uppercase text-[10px]">student chapter leadership applications</p>
+                        <p class="mt-6 text-slate-600 font-medium italic max-w-sm mx-auto text-base leading-relaxed">Initiating search for visionaries to redefine the NMIMS Indore technical ecosystem.</p>
                     </div>
 
-                    <!-- Input Steps -->
+                    <!-- Steps -->
                     <div x-show="step === 1" class="card-animation">
-                        <label class="tech-orbitron text-[10px] text-red-600 font-bold tracking-[4px] mb-4 block uppercase">Designation Entry</label>
-                        <h2 class="title-oswald text-4xl sm:text-5xl font-black uppercase mb-10 italic">Your Full Name</h2>
+                        <label class="tech-orbitron text-[10px] text-red-600 font-bold tracking-[4px] mb-4 block uppercase">Personal Details</label>
+                        <h2 class="title-oswald text-3xl sm:text-5xl font-black uppercase mb-10 italic leading-none">Your Full Name</h2>
                         <input type="text" class="form-input" placeholder="FULL LEGAL NAME" x-model="formData.name" @keydown.enter="handleNext">
                     </div>
 
                     <div x-show="step === 2" class="card-animation">
-                        <label class="tech-orbitron text-[10px] text-red-600 font-bold tracking-[4px] mb-4 block uppercase">Protocol: Authorization</label>
-                        <h2 class="title-oswald text-4xl sm:text-5xl font-black uppercase mb-2 italic">SAP ID</h2>
-                        <p class="text-[10px] text-slate-400 mb-10 font-bold uppercase tracking-[3px]">Strict 11-Digit Requirement</p>
-                        <input type="text" maxlength="11" class="form-input tech-orbitron" placeholder="710XXXXXXX" x-model="formData.sapId" @keydown.enter="handleNext">
+                        <label class="tech-orbitron text-[10px] text-red-600 font-bold tracking-[4px] mb-4 block uppercase">Authorization Protocol</label>
+                        <h2 class="title-oswald text-3xl sm:text-5xl font-black uppercase mb-2 italic leading-none">SAP ID</h2>
+                        <p class="text-[10px] text-slate-400 mb-10 font-bold uppercase tracking-[3px]">Strict 11-Digit Numerical Input</p>
+                        <input type="text" maxlength="11" class="form-input tech-orbitron" placeholder="7XXXXXXXXXX" x-model="formData.sapId" @keydown.enter="handleNext">
                     </div>
 
-                    <div x-show="step === 3" class="text-center card-animation py-10">
-                        <i data-lucide="server" class="w-20 h-20 text-red-600 mx-auto mb-8 opacity-10"></i>
-                        <h2 class="title-oswald text-5xl font-black uppercase italic">Academic<br>Registry</h2>
-                        <div class="red-rule"></div>
+                    <div x-show="step === 3" class="card-animation">
+                        <label class="tech-orbitron text-[10px] text-red-600 font-bold tracking-[4px] mb-4 block uppercase">Contact Protocol</label>
+                        <h2 class="title-oswald text-3xl sm:text-5xl font-black uppercase mb-10 italic leading-none">Email Address</h2>
+                        <input type="email" class="form-input" placeholder="UNIVERSITY OR PERSONAL EMAIL" x-model="formData.email" @keydown.enter="handleNext">
                     </div>
 
                     <div x-show="step === 4" class="card-animation">
-                        <label class="tech-orbitron text-[10px] text-red-600 font-bold tracking-[4px] mb-4 block uppercase">Field: Standing</label>
-                        <h2 class="title-oswald text-4xl font-black uppercase mb-10 italic">Academic Year</h2>
-                        <input type="text" class="form-input" placeholder="e.g. SECOND YEAR" x-model="formData.year" @keydown.enter="handleNext">
+                        <label class="tech-orbitron text-[10px] text-red-600 font-bold tracking-[4px] mb-4 block uppercase">Contact Protocol</label>
+                        <h2 class="title-oswald text-3xl sm:text-5xl font-black uppercase mb-10 italic leading-none">Contact Number</h2>
+                        <input type="text" maxlength="10" class="form-input" placeholder="10-DIGIT MOBILE NUMBER" x-model="formData.contact" @keydown.enter="handleNext">
                     </div>
 
-                    <div x-show="step === 5" class="card-animation">
-                        <label class="tech-orbitron text-[10px] text-red-600 font-bold tracking-[4px] mb-4 block uppercase">Field: Cluster</label>
-                        <h2 class="title-oswald text-4xl font-black uppercase mb-10 italic">Section Unit</h2>
-                        <input type="text" class="form-input" placeholder="e.g. C1" x-model="formData.section" @keydown.enter="handleNext">
+                    <div x-show="step === 5" class="text-center card-animation py-10">
+                        <i data-lucide="server" class="w-16 h-16 text-red-600 mx-auto mb-6 opacity-10"></i>
+                        <h2 class="title-oswald text-4xl sm:text-5xl font-black uppercase italic leading-none">Academic<br>Registry</h2>
+                        <div class="h-1 w-12 bg-red-600 mx-auto mt-6"></div>
                     </div>
 
                     <div x-show="step === 6" class="card-animation">
-                        <label class="tech-orbitron text-[10px] text-red-600 font-bold tracking-[4px] mb-4 block uppercase">Field: Pointer</label>
-                        <h2 class="title-oswald text-4xl font-black uppercase mb-10 italic">Roll Sequence</h2>
-                        <input type="text" class="form-input" placeholder="00" x-model="formData.rollNo" @keydown.enter="handleNext">
+                        <label class="tech-orbitron text-[10px] text-red-600 font-bold tracking-[4px] mb-4 block uppercase">Standing Status</label>
+                        <h2 class="title-oswald text-3xl sm:text-5xl font-black uppercase mb-10 italic leading-none">Academic Year</h2>
+                        <div class="grid grid-cols-2 gap-4">
+                            <template x-for="yr in ['I', 'II', 'III', 'IV']">
+                                <button @click="formData.year = yr; handleNext()" class="btn-selection" :class="formData.year === yr ? 'active' : 'inactive'" x-text="yr"></button>
+                            </template>
+                        </div>
                     </div>
 
                     <div x-show="step === 7" class="card-animation">
-                        <label class="tech-orbitron text-[10px] text-red-600 font-bold tracking-[4px] mb-4 block uppercase">Field: Stream</label>
-                        <h2 class="title-oswald text-4xl font-black uppercase mb-10 italic">Academic Branch</h2>
-                        <input type="text" class="form-input" placeholder="e.g. B.TECH CS" x-model="formData.branch" @keydown.enter="handleNext">
+                        <label class="tech-orbitron text-[10px] text-red-600 font-bold tracking-[4px] mb-4 block uppercase">Cluster Unit</label>
+                        <h2 class="title-oswald text-3xl sm:text-5xl font-black uppercase mb-10 italic leading-none">Section</h2>
+                        <div class="grid grid-cols-3 gap-4">
+                            <template x-for="sec in ['A', 'B', 'C']">
+                                <button @click="formData.section = sec; handleNext()" class="btn-selection" :class="formData.section === sec ? 'active' : 'inactive'" x-text="sec"></button>
+                            </template>
+                        </div>
                     </div>
 
-                    <div x-show="step === 8" class="text-center card-animation py-10">
-                        <i data-lucide="shield" class="w-20 h-20 text-red-600 mx-auto mb-8 opacity-10"></i>
-                        <h2 class="title-oswald text-5xl font-black uppercase italic">Legacy<br>Audit</h2>
-                        <div class="red-rule"></div>
+                    <div x-show="step === 8" class="card-animation">
+                        <label class="tech-orbitron text-[10px] text-red-600 font-bold tracking-[4px] mb-4 block uppercase">Stream Field</label>
+                        <h2 class="title-oswald text-3xl sm:text-5xl font-black uppercase mb-10 italic leading-none">Branch</h2>
+                        <div class="space-y-4">
+                            <template x-for="br in ['CE', 'AI&DS', 'MBA Tech']">
+                                <button @click="formData.branch = br; handleNext()" class="btn-selection w-full block" :class="formData.branch === br ? 'active' : 'inactive'" x-text="br"></button>
+                            </template>
+                        </div>
                     </div>
 
-                    <div x-show="step === 9" class="card-animation">
-                        <label class="tech-orbitron text-[10px] text-red-600 font-bold tracking-[4px] mb-4 block uppercase">Field: Experience</label>
-                        <h2 class="title-oswald text-4xl font-black uppercase mb-10 italic">Former ACM Membership?</h2>
+                    <div x-show="step === 9" class="text-center card-animation py-10">
+                        <i data-lucide="shield" class="w-16 h-16 text-red-600 mx-auto mb-6 opacity-10"></i>
+                        <h2 class="title-oswald text-4xl sm:text-5xl font-black uppercase italic leading-none">Legacy<br>Audit</h2>
+                        <div class="h-1 w-12 bg-red-600 mx-auto mt-6"></div>
+                    </div>
+
+                    <div x-show="step === 10" class="card-animation">
+                        <label class="tech-orbitron text-[10px] text-red-600 font-bold tracking-[4px] mb-4 block uppercase">Service Record</label>
+                        <h2 class="title-oswald text-3xl sm:text-5xl font-black uppercase mb-10 italic leading-none">Prior Member?</h2>
                         <div class="flex flex-col sm:flex-row gap-4">
                             <button @click="formData.wasMember = 'Yes'; handleNext()" class="btn-selection" :class="formData.wasMember === 'Yes' ? 'active' : 'inactive'">Affirmative (Yes)</button>
                             <button @click="formData.wasMember = 'No'; handleNext()" class="btn-selection" :class="formData.wasMember === 'No' ? 'active' : 'inactive'">Negative (No)</button>
                         </div>
                     </div>
 
-                    <div x-show="step === 10" class="card-animation">
-                        <label class="tech-orbitron text-[10px] text-red-600 font-bold tracking-[4px] mb-4 block uppercase">Field: Division</label>
-                        <h2 class="title-oswald text-4xl font-black uppercase mb-10 italic">Previous Department</h2>
+                    <div x-show="step === 11" class="card-animation">
+                        <label class="tech-orbitron text-[10px] text-red-600 font-bold tracking-[4px] mb-4 block uppercase">Division Field</label>
+                        <h2 class="title-oswald text-3xl sm:text-5xl font-black uppercase mb-10 italic leading-none">Previous Dept</h2>
                         <input type="text" class="form-input" placeholder="e.g. TECHNICAL" x-model="formData.prevDept" @keydown.enter="handleNext">
                     </div>
 
-                    <div x-show="step === 11" class="card-animation">
-                        <label class="tech-orbitron text-[10px] text-red-600 font-bold tracking-[4px] mb-4 block uppercase">Protocol: Scope</label>
-                        <h2 class="title-oswald text-4xl font-black uppercase mb-8 italic">Wing Selection</h2>
-                        <div class="space-y-4">
-                            <template x-for="ch in ['ACM', 'ACM-W']">
-                                <label class="flex items-center gap-6 p-6 border-2 cursor-pointer transition-all hover:bg-slate-50 group" :class="formData.chapterType.includes(ch) ? 'border-red-600 bg-red-50' : 'border-slate-100'">
-                                    <input type="checkbox" :value="ch" x-model="formData.chapterType" class="w-8 h-8 accent-red-600">
-                                    <span class="title-oswald text-3xl font-black italic group-hover:text-red-600 transition-colors" x-text="ch"></span>
-                                </label>
-                            </template>
-                        </div>
-                    </div>
-
+                    <!-- Roles Selection -->
                     <div x-show="step === 12" class="card-animation">
-                        <label class="tech-orbitron text-[10px] text-red-600 font-bold tracking-[4px] mb-4 block uppercase">Protocol: Designation</label>
-                        <h2 class="title-oswald text-4xl font-black uppercase mb-6 italic">Target Roles</h2>
+                        <label class="tech-orbitron text-[10px] text-red-600 font-bold tracking-[4px] mb-4 block uppercase">Target Designation</label>
+                        <h2 class="title-oswald text-3xl sm:text-5xl font-black uppercase mb-6 italic leading-none text-red-600">Core Roles</h2>
                         <div class="grid grid-cols-1 gap-2 max-h-72 overflow-y-auto pr-2 custom-scrollbar">
                             <template x-for="role in Object.keys(roleData)">
-                                <label class="flex items-center gap-4 p-5 border cursor-pointer transition-all" :class="formData.roles.includes(role) ? 'border-red-600 bg-red-50 shadow-md' : 'border-slate-100 bg-white hover:border-red-200'">
-                                    <input type="checkbox" :value="role" x-model="formData.roles" class="w-6 h-6 accent-red-600">
-                                    <span class="title-oswald font-bold text-xl italic" x-text="role"></span>
+                                <label class="flex items-center gap-4 p-4 border rounded-lg cursor-pointer transition-all" :class="formData.roles.includes(role) ? 'border-red-600 bg-red-50' : 'border-slate-400 bg-white hover:border-red-600'">
+                                    <input type="checkbox" :value="role" x-model="formData.roles" class="w-5 h-5 accent-red-600">
+                                    <span class="title-oswald font-bold text-lg italic uppercase" x-text="role"></span>
                                 </label>
                             </template>
                         </div>
                     </div>
 
+                    <!-- Chapter Selection -->
                     <div x-show="step === 13" class="card-animation">
-                        <label class="tech-orbitron text-[10px] text-red-600 font-bold tracking-[4px] mb-4 block uppercase">Protocol: Verification</label>
-                        <h2 class="title-oswald text-4xl font-black uppercase mb-6 italic">Review Protocols</h2>
+                        <label class="tech-orbitron text-[10px] text-red-600 font-bold tracking-[4px] mb-4 block uppercase">Strategic Scope</label>
+                        <h2 class="title-oswald text-3xl sm:text-5xl font-black uppercase mb-10 italic leading-none">Wing Objective</h2>
+                        <div class="space-y-4">
+                            <template x-for="ch in ['ACM', 'ACM-W']">
+                                <label class="flex items-center gap-6 p-6 border-2 cursor-pointer transition-all hover:bg-slate-50 group rounded-xl" :class="formData.chapterType.includes(ch) ? 'border-red-600 bg-red-50' : 'border-slate-400'">
+                                    <input type="checkbox" :value="ch" x-model="formData.chapterType" class="w-8 h-8 accent-red-600">
+                                    <span class="title-oswald text-3xl font-black italic group-hover:text-red-600 transition-colors uppercase" x-text="ch"></span>
+                                </label>
+                            </template>
+                        </div>
+                    </div>
+
+                    <div x-show="step === 14" class="card-animation">
+                        <label class="tech-orbitron text-[10px] text-red-600 font-bold tracking-[4px] mb-4 block uppercase">Final Verification</label>
+                        <h2 class="title-oswald text-3xl sm:text-5xl font-black uppercase mb-6 italic leading-none">Review Phase</h2>
                         <div class="space-y-4 max-h-80 overflow-y-auto pr-4 custom-scrollbar">
                             <template x-for="role in formData.roles">
-                                <div class="p-8 bg-black text-white border-l-[12px] border-red-600 shadow-xl">
-                                    <h4 class="title-oswald text-2xl font-black text-red-600 mb-3 italic tracking-[2px]" x-text="role"></h4>
-                                    <p class="text-sm font-medium leading-relaxed italic opacity-70" x-text="roleData[role]"></p>
+                                <div class="p-6 bg-black text-white border-l-[10px] border-red-600 shadow-xl">
+                                    <h4 class="title-oswald text-2xl font-black text-red-600 mb-2 italic tracking-[2px]" x-text="role"></h4>
+                                    <p class="text-xs font-medium leading-relaxed italic opacity-70" x-text="roleData[role]"></p>
                                 </div>
                             </template>
                         </div>
                     </div>
                 </div>
 
-                <!-- Navigation Controls -->
-                <div class="p-8 sm:px-20 pb-16">
+                <!-- Footer Control Area -->
+                <div class="p-6 sm:px-20 pb-12 sm:pb-16 mt-4">
                     <div class="flex flex-col sm:flex-row gap-6 items-center">
-                        <button x-show="step > 0" @click="handleBack" class="title-oswald text-slate-400 font-bold hover:text-black transition-colors flex items-center gap-2 group">
+                        <button x-show="step > 0" @click="handleBack" class="title-oswald text-slate-400 font-bold hover:text-black transition-colors flex items-center gap-2 group tracking-[3px]">
                             <i data-lucide="chevron-left" class="w-5 h-5 group-hover:-translate-x-1 transition-transform"></i> Return
                         </button>
                         <button @click="handleNext" :disabled="loading" class="btn-action w-full sm:flex-grow">
-                            <span x-text="loading ? 'ENCRYPTING DATA...' : (step === 0 ? 'Initialize Entry' : (step === 13 ? 'Authorize Submission' : 'Next Protocol'))"></span>
+                            <span x-text="loading ? 'ENCRYPTING...' : (step === 0 ? 'Initialize Entry' : (step === 14 ? 'Authorize Submission' : 'Confirm Protocol'))"></span>
                             <i x-show="!loading" data-lucide="chevron-right" class="w-5 h-5"></i>
                         </button>
                     </div>
